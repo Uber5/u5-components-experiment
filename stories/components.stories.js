@@ -4,14 +4,16 @@ import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { linkTo } from '@storybook/addon-links';
 
-import { } from 'react-md'
-
 import reduxDecorator from './redux-decorator'
 
 import { ActionButton } from '../src/';
 import SimpleForm from './simple-form'
 
 // storiesOf('Welcome', module).add('to Storybook', () => <Welcome showApp={linkTo('Button')} />);
+
+import '../styles/main.css'
+
+// console.log('styles', styles)
 
 const reactMdDecorator = story => (
   <div>
