@@ -60,7 +60,7 @@
     ],
     "flowtype/use-flow-type": 1,
     "flowtype/valid-syntax": 1,
-    "react/jsx-filename-extension": 1
+    "react/jsx-filename-extension": 0
   },
   "env": {
     "jest/globals": true

@@ -6,7 +6,7 @@
     "prepublish": "yarn lint && yarn typecheck && yarn test && yarn nsp:check && yarn build",
     "nsp:check": "nsp check --reporter minimal",
     "test": "jest",
-    "lint": "eslint src --quiet",
+    "lint": "eslint src",
     "typecheck": "flow --quiet",
     "dev:watch": "watch 'npm-run-all typecheck test lint' src",
     "docs": "documentation readme src --section=API",
