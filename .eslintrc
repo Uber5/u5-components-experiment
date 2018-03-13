@@ -59,7 +59,8 @@
       "always"
     ],
     "flowtype/use-flow-type": 1,
-    "flowtype/valid-syntax": 1
+    "flowtype/valid-syntax": 1,
+    "react/jsx-filename-extension": 1
   },
   "env": {
     "jest/globals": true
