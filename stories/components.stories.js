@@ -6,7 +6,10 @@ import { linkTo } from '@storybook/addon-links';
 
 import { } from 'react-md'
 
+import reduxDecorator from './redux-decorator'
+
 import { ActionButton } from '../src/';
+import SimpleForm from './simple-form'
 
 // storiesOf('Welcome', module).add('to Storybook', () => <Welcome showApp={linkTo('Button')} />);
 
@@ -25,3 +28,11 @@ storiesOf('Action Button', module)
     () => <ActionButton iconChildren="cloud_upload" onClick={action('clicked')}>Do this!</ActionButton>
   )
   .add('with some emoji (silly)', () => <ActionButton onClick={action('clicked')}>😀 😎 👍 💯</ActionButton>);
+
+storiesOf('Sample form', module)
+  .addDecorator(reactMdDecorator)
+  .addDecorator(reduxDecorator)
+  .add(
+    'simple form',
+    () => <SimpleForm />
+  )
