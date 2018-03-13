@@ -1,0 +1,42 @@
+{
+  "name": "u5-components-experiment",
+  "scripts": {
+    "start": "node dist",
+    "build": "babel src/ -d dist/ --source-maps --ignore \"**/__tests__/*.js\",**/*.test.js",
+    "prepublish": "yarn lint && yarn typecheck && yarn test && yarn nsp:check && yarn build",
+    "nsp:check": "nsp check --reporter minimal",
+    "test": "jest",
+    "lint": "eslint src --quiet",
+    "typecheck": "flow --quiet",
+    "dev:watch": "watch 'npm-run-all typecheck test lint' src",
+    "docs": "documentation readme src --section=API",
+    "clean": "rimraf dist",
+    "prebuild": "yarn run docs && yarn run clean"
+  },
+  "version": "0.0.1",
+  "description": "Experimenting with yeoman generators",
+  "main": "dist",
+  "dependencies": {},
+  "license": "GPL-3.0",
+  "devDependencies": {
+    "babel-cli": "6.26.0",
+    "babel-eslint": "8.2.2",
+    "babel-preset-env": "1.6.1",
+    "babel-preset-flow": "6.23.0",
+    "documentation": "6.1.0",
+    "eslint": "4.18.2",
+    "eslint-config-airbnb": "16.1.0",
+    "eslint-plugin-flowtype": "2.46.1",
+    "eslint-plugin-import": "2.9.0",
+    "eslint-plugin-jest": "21.14.0",
+    "eslint-plugin-jsx-a11y": "6.0.3",
+    "eslint-plugin-react": "7.7.0",
+    "eslint-watch": "3.1.3",
+    "fb-watchman": "2.0.0",
+    "flow-bin": "0.67.1",
+    "jest": "22.4.2",
+    "npm-run-all": "4.1.2",
+    "nsp": "3.2.1",
+    "rimraf": "2.6.2"
+  }
+}
