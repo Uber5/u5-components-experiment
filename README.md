@@ -1,6 +1,6 @@
 # u5-components-experiment
 
-(Describe here what your lib does)
+Experimental, (hopefully) reusable React Components
 
 # Run Tests (etc) in Development
 
@@ -13,6 +13,10 @@ This will run
 [Flow type checking](https://flow.org/) and
 [ESLint](https://eslint.org/docs/rules/),
 while you focus on implementing great functionality.
+
+# Run Storybook in Development
+
+    yarn run storybook
 
 ## How to Publish
 

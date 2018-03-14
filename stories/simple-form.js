@@ -1,10 +1,11 @@
 import React from 'react'
 import { reduxForm, Field } from 'redux-form'
 
-import { ActionButton, ButtonGroup } from '../src'
+import { ActionButton, ButtonGroup, TextField } from '../src'
+
 const SimpleForm = ({ handleSubmit }) => (
   <form onSubmit={handleSubmit}>
-    <Field name="val1" component="input" type="text"/>
+    <Field id="val1" name="val1" component={TextField} type="text" label="Example text field"/>
     <ButtonGroup>
       <ActionButton type="submit">Save</ActionButton>
       <ActionButton primary={false}>Cancel</ActionButton>
