@@ -1,5 +1,5 @@
 {
-  "name": "u5-components-experiment",
+  "name": "@u5/components-experiment",
   "scripts": {
     "start": "node dist",
     "build": "babel src/ -d dist/ --source-maps --ignore \"**/__tests__/*.js\",**/*.test.js",
