@@ -2,8 +2,8 @@ import React from 'react'
 import { compose, withState, withHandlers, defaultProps, setPropTypes, mapProps } from 'recompose'
 
 import { Autocomplete, Avatar, Chip } from 'react-md'
-import { PropTypes } from 'prop-types'
-import Transition from 'react-transition-group/Transition';
+import PropTypes from 'prop-types'
+import { CSSTransition, CSSTransitionGroup, Transition } from 'react-transition-group';
 import { append } from 'ramda'
 const duration = 300;
 
@@ -94,7 +94,10 @@ const states = [
 
 const MyAutocomplete = compose(
   setPropTypes({
-    choices: PropTypes.arrayOf(PropTypes.oneOf([PropTypes.string, PropTypes.object])),
+    choices: PropTypes.oneOfType([
+      PropTypes.arrayOf(PropTypes.string),
+      PropTypes.arrayOf(PropTypes.object)
+    ]),
     renderChosen: PropTypes.func
   }),
   mapProps(
@@ -125,9 +128,16 @@ const MyAutocomplete = compose(
   })
 )(({ nextChoices, chosen, choose, renderChosen, unChoose, ownerProps }) => (
   <React.Fragment>
-    {chosen.map(chosenEl => renderChosen({ chosen: chosenEl, onRemove: () => {
-      unChoose(chosenEl)
-    }}))}
+    <CSSTransitionGroup
+      transitionEnterTimeout={500}
+      transitionLeaveTimeout={300}
+      component="div"
+      transitionName="multiselect"
+    >
+      {chosen.map(chosenEl => renderChosen({ chosen: chosenEl, onRemove: () => {
+        unChoose(chosenEl)
+      }}))}
+    </CSSTransitionGroup>
     <Autocomplete
       data={nextChoices}
       onAutocomplete={choose}
@@ -149,9 +159,9 @@ const FadeInOut = compose(
 </React.Fragment>)
 
 export default () => <React.Fragment>
-  <h3>Fade in/out (testing)</h3>
+  {/* <h3>Fade in/out (testing)</h3>
   <FadeInOut />
-  <h3>Actual multi select</h3>
+  <h3>Actual multi select</h3> */}
   <p>Here the actual multi select</p>
   <MyAutocomplete
     choices={states}
@@ -159,6 +169,7 @@ export default () => <React.Fragment>
     label='States of the US'
     renderChosen={({ chosen, onRemove }) => {
       return <Chip
+        key={chosen}
         removable
         onClick={onRemove}
         label={chosen}

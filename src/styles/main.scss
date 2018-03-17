@@ -1,3 +1,30 @@
 .buttons__group .md-btn {
   margin: 1em
 }
+
+.multiselect-enter {
+  opacity: 0.01;
+}
+
+.multiselect-enter.multiselect-enter-active {
+  opacity: 1;
+  transition: opacity 500ms ease-in;
+}
+
+.multiselect-leave {
+  opacity: 1;
+}
+
+.multiselect-leave.multiselect-leave-active {
+  opacity: 0.01;
+  transition: opacity 300ms ease-in;
+}
+
+.multiselect-appear {
+  opacity: 0.01;
+}
+
+.multiselect-appear.multiselect-appear-active {
+  opacity: 1;
+  transition: opacity .5s ease-in;
+}
