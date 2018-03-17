@@ -1,5 +1,5 @@
 import React from 'react'
-import { compose, withState, withHandlers, defaultProps, setPropTypes } from 'recompose'
+import { compose, withState, withHandlers, defaultProps, setPropTypes, mapProps } from 'recompose'
 
 import { Autocomplete, Avatar, Chip } from 'react-md'
 import { PropTypes } from 'prop-types'
@@ -97,6 +97,13 @@ const MyAutocomplete = compose(
     choices: PropTypes.arrayOf(PropTypes.oneOf([PropTypes.string, PropTypes.object])),
     renderChosen: PropTypes.func
   }),
+  mapProps(
+    ({ choices, renderChosen, ...ownerProps }) => ({
+      choices,
+      renderChosen,
+      ownerProps
+    }) 
+  ),
   withState('chosen', 'setChosen', []),
   withState(
     'nextChoices',
@@ -105,26 +112,28 @@ const MyAutocomplete = compose(
   ),
   withHandlers({
     choose: props => (abbreviation, index, matches) => {
-      console.log('choose', abbreviation, index, matches)
       const choice = matches[index]
       props.setChosen(append(choice, props.chosen))
       props.setNextChoices(props.nextChoices.filter(e => e !== choice))
     },
-    unChoose: props => (unChosen) => {
-      console.log('unchoose', unChosen)
+    unChoose: ({ chosen, choices, ...props }) => (unChosen) => {
+      props.setChosen(chosen.filter(e => e !== unChosen))
+      props.setNextChoices(
+        choices.filter(e => e === unChosen || !chosen.includes(e))
+      )
     }
   })
-)(({ nextChoices, chosen, choose, renderChosen, unChoose }) => (
+)(({ nextChoices, chosen, choose, renderChosen, unChoose, ownerProps }) => (
   <React.Fragment>
     {chosen.map(chosenEl => renderChosen({ chosen: chosenEl, onRemove: () => {
       unChoose(chosenEl)
     }}))}
     <Autocomplete
-      id='my-autocomplete'
-      label='States of the US'
       data={nextChoices}
       onAutocomplete={choose}
       clearOnAutocomplete
+      focusInputOnAutocomplete
+      {...ownerProps}
     />
   </React.Fragment>
 ))
@@ -144,12 +153,16 @@ export default () => <React.Fragment>
   <FadeInOut />
   <h3>Actual multi select</h3>
   <p>Here the actual multi select</p>
-  <MyAutocomplete choices={states} renderChosen={({ chosen, onRemove }) => {
-    return <Chip
-      removable
-      onClick={onRemove}
-      label={chosen}
-      avatar={<Avatar random>{chosen.charAt(0)}</Avatar>}
-    />
-  }}/>
+  <MyAutocomplete
+    choices={states}
+    id='my-autocomplete'
+    label='States of the US'
+    renderChosen={({ chosen, onRemove }) => {
+      return <Chip
+        removable
+        onClick={onRemove}
+        label={chosen}
+        avatar={<Avatar random>{chosen.charAt(0)}</Avatar>}
+      />
+    }}/>
 </React.Fragment>
