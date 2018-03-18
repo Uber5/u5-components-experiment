@@ -79,22 +79,29 @@ export const MultiSelect:HOC<React.Component<MultiSelectHOCProps>, MultiSelectHO
     renderChosen: RenderChosenFn,
     ownerProps: any
   } =>
-    (
-      {
-        choices,
-        renderChosen,
-        value,
-        onChange,
-        ownerProps
-      }
-    )
+      (
+        {
+          choices,
+          renderChosen,
+          value,
+          onChange,
+          ownerProps
+        }
+      )),
+  withState(
+    'chosen',
+    'setChosen',
+    ({ value }: { value?: Choices }): Choices => value || []
   ),
-  withState('chosen', 'setChosen', []),
   withState(
     'nextChoices',
     'setNextChoices',
     // initially, the choices are the next state
-    ({ choices }: { choices: Choices }): Choices => choices
+    ({
+      choices, chosen
+    }: {
+      choices: Choices, chosen: Choices
+    }): Choices => choices.filter((choice: Choice): boolean => !chosen.includes(choice))
   ),
   withChooseAndUnChoose
 )(({
