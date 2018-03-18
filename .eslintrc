@@ -5,6 +5,7 @@
   "rules": {
     "no-console": ["warn"],
     "semi": ["error", "never"],
+    "comma-dangle": [1, "never"],
     "flowtype/boolean-style": [
       2,
       "boolean"
@@ -35,8 +36,8 @@
     ],
     "flowtype/require-valid-file-annotation": 2,
     "flowtype/semi": [
-      2,
-      "always"
+      1,
+      "never"
     ],
     "flowtype/space-after-type-colon": [
       2,
@@ -52,7 +53,7 @@
     ],
     "flowtype/type-id-match": [
       2,
-      "^([A-Z][a-z0-9]+)+Type$"
+      "^([A-Z][A-Za-z0-9]+)$"
     ],
     "flowtype/union-intersection-spacing": [
       2,

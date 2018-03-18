@@ -1,10 +1,6 @@
 import React from 'react'
-import { compose, withState, withHandlers, defaultProps, setPropTypes, mapProps } from 'recompose'
-
-import { Autocomplete, Avatar, Chip } from 'react-md'
-import PropTypes from 'prop-types'
-import { CSSTransition, CSSTransitionGroup, Transition } from 'react-transition-group';
-import { append } from 'ramda'
+import { Avatar, Chip } from 'react-md'
+import { MultiSelect } from '../src'
 
 const states = [
   "Alabama",
@@ -66,66 +62,10 @@ const states = [
   "West Virginia",
   "Wisconsin",
   "Wyoming"
-];
-
-const MyAutocomplete = compose(
-  setPropTypes({
-    choices: PropTypes.oneOfType([
-      PropTypes.arrayOf(PropTypes.string),
-      PropTypes.arrayOf(PropTypes.object)
-    ]),
-    renderChosen: PropTypes.func
-  }),
-  mapProps(
-    ({ choices, renderChosen, ...ownerProps }) => ({
-      choices,
-      renderChosen,
-      ownerProps
-    }) 
-  ),
-  withState('chosen', 'setChosen', []),
-  withState(
-    'nextChoices',
-    'setNextChoices',
-    ({ choices }) => choices // initially, the choices are the next state
-  ),
-  withHandlers({
-    choose: props => (abbreviation, index, matches) => {
-      const choice = matches[index]
-      props.setChosen(append(choice, props.chosen))
-      props.setNextChoices(props.nextChoices.filter(e => e !== choice))
-    },
-    unChoose: ({ chosen, choices, ...props }) => (unChosen) => {
-      props.setChosen(chosen.filter(e => e !== unChosen))
-      props.setNextChoices(
-        choices.filter(e => e === unChosen || !chosen.includes(e))
-      )
-    }
-  })
-)(({ nextChoices, chosen, choose, renderChosen, unChoose, ownerProps }) => (
-  <React.Fragment>
-    <CSSTransitionGroup
-      transitionEnterTimeout={500}
-      transitionLeaveTimeout={300}
-      component="div"
-      transitionName="multiselect"
-    >
-      {chosen.map(chosenEl => renderChosen({ chosen: chosenEl, onRemove: () => {
-        unChoose(chosenEl)
-      }}))}
-    </CSSTransitionGroup>
-    <Autocomplete
-      data={nextChoices}
-      onAutocomplete={choose}
-      clearOnAutocomplete
-      focusInputOnAutocomplete
-      {...ownerProps}
-    />
-  </React.Fragment>
-))
+]
 
 export default () => <React.Fragment>
-  <MyAutocomplete
+  <MultiSelect
     choices={states}
     id='my-autocomplete'
     label='States of the US'
