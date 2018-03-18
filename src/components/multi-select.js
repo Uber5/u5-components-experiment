@@ -19,9 +19,9 @@ type AnyProps = any
 type RenderChosenFn = ({
   chosen: Choice,
   onRemove: (choice: Choice) => void
-}) => React$Element<any>
+}) => React.Element<any>
 
-type MultiSelectProps = {
+export type MultiSelectProps = {
   choices: Choices,
   renderChosen: RenderChosenFn
 }
@@ -41,11 +41,15 @@ type MultiSelectHOCProps = MultiSelectProps & WithChooseAndUnChoose & {
 const withChooseAndUnChoose: HOC<React.Component<any>, WithChooseAndUnChoose> = withHandlers({
   choose: props => (abbreviation, index, matches) => {
     const choice = matches[index]
-    props.setChosen(append(choice, props.chosen))
+    const chosen = append(choice, props.chosen)
+    props.setChosen(chosen)
+    props.onChange && props.onChange(chosen)
     props.setNextChoices(props.nextChoices.filter(e => e !== choice))
   },
   unChoose: ({ chosen, choices, ...props }) => (unChosen) => {
-    props.setChosen(chosen.filter(e => e !== unChosen))
+    const nextChosen = chosen.filter(e => e !== unChosen)
+    props.setChosen(nextChosen)
+    props.onChange && props.onChange(nextChosen)
     props.setNextChoices(
       choices.filter(e => e === unChosen || !chosen.includes(e))
     )
@@ -53,7 +57,7 @@ const withChooseAndUnChoose: HOC<React.Component<any>, WithChooseAndUnChoose> = 
 })
 /* eslint-enable */
 
-const multiSelect:HOC<*, MultiSelectHOCProps> = compose(
+export const MultiSelect:HOC<React.Component<MultiSelectHOCProps>, MultiSelectHOCProps> = compose(
   setPropTypes({
     choices: PropTypes.oneOfType([
       PropTypes.arrayOf(PropTypes.string),
@@ -61,18 +65,30 @@ const multiSelect:HOC<*, MultiSelectHOCProps> = compose(
     ]),
     renderChosen: PropTypes.func
   }),
-  mapProps(({ choices, renderChosen, ...ownerProps }: {
-    choices: Choices,
-    renderChosen: RenderChosenFn
-  }): {
+  mapProps(({
+    choices, renderChosen, value, onChange, ...ownerProps
+  }: {
     choices: Choices,
     renderChosen: RenderChosenFn,
+    value?: Choices,
+    onChange: (value: Choices) => void
+  }): {
+    choices: Choices,
+    value?: Choices,
+    onChange?: (value: Choices) => void,
+    renderChosen: RenderChosenFn,
     ownerProps: any
-  } => ({
-    choices,
-    renderChosen,
-    ownerProps
-  })),
+  } =>
+    (
+      {
+        choices,
+        renderChosen,
+        value,
+        onChange,
+        ownerProps
+      }
+    )
+  ),
   withState('chosen', 'setChosen', []),
   withState(
     'nextChoices',
@@ -81,11 +97,9 @@ const multiSelect:HOC<*, MultiSelectHOCProps> = compose(
     ({ choices }: { choices: Choices }): Choices => choices
   ),
   withChooseAndUnChoose
-)
-
-const MultiSelect: React.Component<MultiSelectProps> = multiSelect(({
+)(({
   nextChoices, chosen, choose, renderChosen, unChoose, ownerProps
-}: MultiSelectHOCProps): React$Element<*> => (
+}: MultiSelectHOCProps): React.Element<*> => (
   <React.Fragment>
     <CSSTransitionGroup
       transitionEnterTimeout={500}
@@ -94,7 +108,7 @@ const MultiSelect: React.Component<MultiSelectProps> = multiSelect(({
       transitionName="multiselect"
     >
       {
-        chosen.map((chosenEl: Choice): React$Element<*> => renderChosen({
+        chosen.map((chosenEl: Choice): React.Element<*> => renderChosen({
           chosen: chosenEl,
           onRemove: (): void => unChoose(chosenEl)
         }))

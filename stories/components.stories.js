@@ -9,6 +9,7 @@ import reduxDecorator from './redux-decorator'
 import { ActionButton } from '../src/';
 import SimpleForm from './simple-form'
 import MultiSelectWithAutocompleteDemo from './multi-select'
+import MultiSelectInForm from './multi-select-in-form'
 
 // storiesOf('Welcome', module).add('to Storybook', () => <Welcome showApp={linkTo('Button')} />);
 
@@ -35,8 +36,13 @@ storiesOf('Action Button', module)
 storiesOf('Multi select', module)
   .addDecorator(reactMdDecorator)
   .add(
-    'with autocomplete',
+    'simple use',
     () => <MultiSelectWithAutocompleteDemo />
+  )
+  .addDecorator(reduxDecorator)
+  .add(
+    'in form',
+    () => <MultiSelectInForm />
   )
 
 storiesOf('Sample form', module)
