@@ -5,30 +5,6 @@ import { Autocomplete, Avatar, Chip } from 'react-md'
 import PropTypes from 'prop-types'
 import { CSSTransition, CSSTransitionGroup, Transition } from 'react-transition-group';
 import { append } from 'ramda'
-const duration = 300;
-
-const defaultStyle = {
-  transition: `opacity ${duration}ms ease-in-out`,
-  opacity: 0,
-}
-
-const transitionStyles = {
-  entering: { opacity: 0 },
-  entered:  { opacity: 1 },
-};
-
-const Fade = ({ in: inProp }) => (
-  <Transition in={inProp} timeout={duration}>
-    {(state) => (
-      <div style={{
-        ...defaultStyle,
-        ...transitionStyles[state]
-      }}>
-        I'm A fade Transition!
-      </div>
-    )}
-  </Transition>
-);
 
 const states = [
   "Alabama",
@@ -148,21 +124,7 @@ const MyAutocomplete = compose(
   </React.Fragment>
 ))
 
-const FadeInOut = compose(
-  withState('visible', 'setVisible', false),
-  withHandlers({
-    toggle: props => () => props.setVisible(!props.visible)
-  })
-)(({ visible, toggle }) => <React.Fragment>
-  <button onClick={() => toggle()}>Toggle</button>
-  <Fade in={visible} />
-</React.Fragment>)
-
 export default () => <React.Fragment>
-  {/* <h3>Fade in/out (testing)</h3>
-  <FadeInOut />
-  <h3>Actual multi select</h3> */}
-  <p>Here the actual multi select</p>
   <MyAutocomplete
     choices={states}
     id='my-autocomplete'
