@@ -64,7 +64,8 @@
     "react-test-renderer": "16.2.0",
     "redux": "3.7.2",
     "redux-form": "7.3.0",
-    "rimraf": "2.6.2"
+    "rimraf": "2.6.2",
+    "storybook-readme": "3.3.0"
   },
   "peerDependencies": {
     "react": "^16.2.0",

@@ -3,14 +3,14 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { linkTo } from '@storybook/addon-links';
-
+import { withReadme } from 'storybook-readme'
 import reduxDecorator from './redux-decorator'
 
 import { ActionButton } from '../src/';
 import SimpleForm from './simple-form'
 import MultiSelectWithAutocompleteDemo from './multi-select'
 import MultiSelectInForm from './multi-select-in-form'
-
+import MultiSelectReadme from '../src/components/multi-select.md'
 import '../styles/main.css'
 
 const reactMdDecorator = story => (
@@ -38,7 +38,10 @@ storiesOf('Multi select', module)
   .addDecorator(reduxDecorator)
   .add(
     'in form',
-    () => <MultiSelectInForm />
+    withReadme(
+      MultiSelectReadme,
+      () => <MultiSelectInForm />
+    )
   )
 
 storiesOf('Sample form', module)
