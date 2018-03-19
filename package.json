@@ -3,7 +3,8 @@
   "scripts": {
     "start": "node dist",
     "build": "babel src/ -d dist/ --source-maps --ignore \"**/__tests__/*.js\",**/*.test.js",
-    "prepublish": "yarn lint && yarn typecheck && yarn test && yarn nsp:check && yarn build && yarn style-publish",
+    "flow-publish": "flow-copy-source src dist",
+    "prepublish": "yarn lint && yarn typecheck && yarn test && yarn nsp:check && yarn build && yarn style-publish && yarn flow-publish",
     "nsp:check": "nsp check --reporter minimal",
     "test": "jest",
     "lint": "eslint src",
@@ -23,8 +24,8 @@
   "dependencies": {
     "prop-types": "^15.6.1",
     "ramda": "^0.25.0",
-    "recompose": "^0.26.0",
-    "react-transition-group": "^1.2.1"
+    "react-transition-group": "^1.2.1",
+    "recompose": "^0.26.0"
   },
   "license": "GPL-3.0",
   "devDependencies": {
@@ -51,6 +52,7 @@
     "eslint-watch": "3.1.3",
     "fb-watchman": "2.0.0",
     "flow-bin": "0.67.1",
+    "flow-copy-source": "1.3.0",
     "jest": "22.4.2",
     "node-sass-chokidar": "1.1.0",
     "npm-run-all": "4.1.2",
