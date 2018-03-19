@@ -2,6 +2,8 @@
 
 Experimental, (hopefully) reusable React Components
 
+There is [experimental component documentation](https://Uber5.github.io/u5-components-experiment/).
+
 # Run Tests (etc) in Development
 
 In general: Use [yarn](https://github.com/yarnpkg/yarn), not `npm`.
