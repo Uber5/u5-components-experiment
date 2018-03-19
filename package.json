@@ -18,7 +18,7 @@
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"
   },
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Experimenting with yeoman generators",
   "main": "dist",
   "dependencies": {
